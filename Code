@@ -1,0 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import tensorflow as tf
+from tensorflow import keras
+data = tf.keras.datasets.cifar10
+data
+df = data.load_data()
+df
+(X_train, y_train),(X_test, y_test) = df
+X_train.shape
+X_test.shape
+X_test.ndim
+y_train.shape
+y_test.shape
+y_test.ndim
+X_train[0]
+plt.matshow(X_train[0])
+for i in range(10):
+  plt.matshow(X_train[i])
+X_train_flat = X_train.reshape(len(X_train), 32*32*3)
+X_test_flat = X_test.reshape(len(X_test), 32*32*3)
+X_train_flat.shape
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
+model = Sequential([
+    Dense(units=10, 
+          input_shape=(3072,), 
+          activation='sigmoid')
+])
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+model.fit(X_train_flat, y_train, epochs=10)
+y_pred=model.predict(X_test_flat)
+y_pred
+y_test
+model.evaluate(X_test_flat, y_test)
